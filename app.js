@@ -8,7 +8,7 @@ const roleQuery = require('./queries/role.js');
 const employeeQuery = require('./queries/employee.js');
 
 // Main prompt 
-function promptOne() {
+function promptSection() {
   inquirer
     .prompt([
       {
@@ -71,4 +71,42 @@ function promptOne() {
 }
 
 
-promptOne()
+
+function viewAllDepartments() {
+}
+
+function addDepartment(){
+
+}
+
+
+
+
+function viewAllEmployees() {
+
+}
+
+function addEmployee() {
+
+}
+
+
+
+
+function viewAllRoles() {
+
+}
+
+function addRole() {
+
+}
+
+
+
+function Exit() {
+
+}
+
+
+promptSection()
+
