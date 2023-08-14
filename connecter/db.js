@@ -5,10 +5,10 @@ const connection = mysql.createConnection({
   port: 3306,
   user: 'root',
   password: 'password',
-  database: 'employeeDB' // Use your actual database name
+  database: 'employeeDB' 
 });
 
-////connection to the 
+
 connection.connect((err) => {
   if (err) throw err;
   console.log('Connected to the database.');
