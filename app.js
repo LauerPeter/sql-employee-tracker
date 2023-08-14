@@ -3,6 +3,10 @@ const inquirer = require('inquirer');
 
 const db = require('./connecter/db.js');
 
+const departmentQuery = require('./queries/department.js');
+const roleQuery = require('./queries/role.js');
+const employeeQuery = require('./queries/employee.js');
+
 // Main prompt 
 function promptOne() {
   inquirer
