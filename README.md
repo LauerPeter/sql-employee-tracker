@@ -27,7 +27,7 @@ git clone <ssh copy/paste>
 
 node app.js
 
--Please be sure to add your own user and password info for mysql2 in the db.js file
+-Please be sure to add your own user and password info for mysql2 in the connector folder to the db.js file
 
 ## Authors
 
