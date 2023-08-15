@@ -83,6 +83,7 @@ function viewAllDepartments() {
       console.error(error);
       console.log("kill terminal and restart");
     });
+
 }
 
 
@@ -95,6 +96,17 @@ function addDepartment(){
         message: 'Enter the name of the new department:',
       }
     ])
+    .then((answers) => {
+      departmentQuery.addDepartment(answers.departmentName)
+        .then(() => {
+          console.log('Department added successfully.');
+          promptSection(); 
+        })
+        .catch((error) => {
+          console.error(error);
+          console.log("kill terminal and restart");
+        });
+    })
 }
 
 
@@ -122,6 +134,17 @@ function addEmployee() {
       message: 'Enter the name of the new employee:',
     }
   ])
+  .then((answers) => {
+    employeeQuery.addEmployee(answers.employeeName)
+      .then(() => {
+        console.log('Employee added successfully.');
+        promptSection(); 
+      })
+      .catch((error) => {
+        console.error(error);
+        console.log("kill terminal and restart");
+      });
+  })
 }
 
 
@@ -148,6 +171,17 @@ function addRole() {
       message: 'Enter a new role name:',
     }
   ])
+  .then((answers) => {
+    roleQuery.addRole(answers.roleName)
+      .then(() => {
+        console.log('Role added successfully.');
+        promptSection(); 
+      })
+      .catch((error) => {
+        console.error(error);
+        console.log("kill terminal and restart");
+      });
+  })
 }
 
 function updateEmployeeRole() {
