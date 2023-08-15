@@ -184,11 +184,62 @@ function addRole() {
   })
 }
 
+
+//////////////////////////////UPDATE EMPLOYEE ROLE
 function updateEmployeeRole() {
+  employeeQuery.getAllEmployees()
+    .then(([employees]) => {
+      const employeeChoices = employees.map(employee => ({
+        name: `${employee.first_name} ${employee.last_name}`,
+        value: employee.id
+      }));
 
-}
+      // Prompt user to select an employee
+      inquirer
+        .prompt([
+          {
+            type: 'list',
+            name: 'selectedEmployee',
+            message: 'Select the employee to update:',
+            choices: employeeChoices
+          }
+        ])
+        .then(({ selectedEmployee }) => {
+          // Get list of roles
+          roleQuery.getAllRoles()
+            .then(([roles]) => {
+              const roleChoices = roles.map(role => ({
+                name: role.title,
+                value: role.id
+              }));
 
-
+              // Prompt user to select a new role
+        inquirer
+          .prompt([
+            {
+              type: 'list',
+              name: 'newRole',
+              message: 'Select the new role:',
+              choices: roleChoices
+            }
+          ])
+          .then(({ newRole }) => {
+            // Update employee's role in the database
+            employeeQuery.updateEmployeeRole(selectedEmployee, newRole)
+              .then(() => {
+              console.log('Employee role updated successfully.');
+              promptSection();
+            })
+              .catch((error) => {
+                console.error(error);
+                console.log('kill terminal and restart');
+              });
+            });
+          });
+        });
+      })
+     }
+  
 
 promptSection()
 
