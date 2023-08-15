@@ -1,7 +1,7 @@
 
 const inquirer = require('inquirer');
 
-const db = require('./connecter/db.js');
+const db = require('./connector/db');
 
 const departmentQuery = require('./queries/department.js');
 const roleQuery = require('./queries/role.js');
@@ -34,7 +34,7 @@ function promptSection() {
         
         case 'View all departments':
           viewAllDepartments();
-          break;
+          break;///terminate loop
         
           case 'View all roles':
           viewAllRoles();
@@ -67,13 +67,24 @@ function promptSection() {
     })
     .catch((error) => {
       console.error(error);
+      console.log("kill terminal and restart");
     });
 }
 
 
-
+///////////////////////////////DEPARTMENT
 function viewAllDepartments() {
+  departmentQuery.getAllDepartments()
+    .then(([rows]) => {
+      console.table(rows);
+      promptSection(); 
+    })
+    .catch((error) => {
+      console.error(error);
+      console.log("kill terminal and restart");
+    });
 }
+
 
 function addDepartment(){
 
@@ -81,9 +92,18 @@ function addDepartment(){
 
 
 
-
+/////////////////////////////EMPLOYEES
 function viewAllEmployees() {
-
+  employeeQuery.getAllEmployees()
+  .then(([rows]) => {
+    console.table(rows);
+    promptSection(); 
+  })
+  .catch((error) => {
+    console.error(error);
+    console.log("kill terminal and restart");
+  });
+  
 }
 
 function addEmployee() {
@@ -92,9 +112,17 @@ function addEmployee() {
 
 
 
-
+/////////////////////////ROLES
 function viewAllRoles() {
-
+  roleQuery.getAllRoles()
+  .then(([rows]) => {
+    console.table(rows);
+    promptSection(); 
+  })
+  .catch((error) => {
+    console.error(error);
+    console.log("kill terminal and restart");
+  });
 }
 
 function addRole() {
@@ -102,7 +130,7 @@ function addRole() {
 }
 
 
-
+/////////////////Exit!
 function Exit() {
 
 }
