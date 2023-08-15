@@ -142,25 +142,32 @@ function viewAllEmployees() {
 
 function addEmployee() {
   inquirer
-  .prompt([
-    {
-      type: 'input',
-      name: 'employeeName',
-      message: 'Enter the name of the new employee:',
-    }
-  ])
-  .then((answers) => {
-    employeeQuery.addEmployee(answers.employeeName)
-      .then(() => {
-        console.log('Employee added successfully.');
-        promptSection(); 
-      })
-      .catch((error) => {
-        console.error(error);
-        console.log("kill terminal and restart");
-      });
-  })
+    .prompt([
+      {
+        type: 'input',
+        name: 'firstName',
+        message: "Enter the employee's first name:",
+      },
+      {
+        type: 'input',
+        name: 'lastName',
+        message: "Enter the employee's last name:",
+      }
+    ])
+    .then((answers) => {
+      const { firstName, lastName } = answers;
+      employeeQuery.addEmployee(firstName, lastName)
+        .then(() => {
+          console.log('Employee added successfully.');
+          promptSection(); 
+        })
+        .catch((error) => {
+          console.error(error);
+          console.log("kill terminal and restart");
+        });
+    });
 }
+
 
 function deleteEmployee() {
 
