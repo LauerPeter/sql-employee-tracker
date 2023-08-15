@@ -1,3 +1,4 @@
+
 const db = require('../connector/db');
 
 class EmployeeQuery {
@@ -10,8 +11,7 @@ class EmployeeQuery {
   }
 
   addEmployee(firstName, lastName, roleId, managerId) {
-    return this.connection.promise().query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)',
-     [firstName, lastName, roleId, managerId]);
+    return this.connection.promise().query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)', [firstName, lastName, roleId, managerId]);
   }
 
   updateEmployeeRole(employeeId, newRoleId) {
@@ -26,12 +26,6 @@ class EmployeeQuery {
       });
     });
   }
-
-  deleteEmployee(employeeId) {
-    return this.connection.promise().query('DELETE FROM employee WHERE id = ?', [employeeId]);
-  }
 }
 
-
-
-module.exports = new EmployeeQuery(require('../connector/db'));
+module.exports = new EmployeeQuery(db);

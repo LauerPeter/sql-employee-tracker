@@ -1,4 +1,3 @@
-
 const inquirer = require('inquirer');
 
 const db = require('./connector/db');
@@ -27,63 +26,45 @@ function promptSection() {
         ]
       }
     ])
-   
     .then((answer) => {
-     
       switch (answer.firstPrompt) {
-        
         case 'View all departments':
           viewAllDepartments();
-          break;///terminate loop
-        
-          case 'View all roles':
+          break;
+
+        case 'View all roles':
           viewAllRoles();
           break;
-       
-          case 'View all employees':
+
+        case 'View all employees':
           viewAllEmployees();
           break;
-        
-          case 'Add a department':
+
+        case 'Add a department':
           addDepartment();
           break;
-       
-          case 'Add a role':
+
+        case 'Add a role':
           addRole();
           break;
-        
-          case 'Add an employee':
+
+        case 'Add an employee':
           addEmployee();
           break;
-       
-          case 'Update an employee role':
+
+        case 'Update an employee role':
           updateEmployeeRole();
           break;
 
-          case 'Delete a department':
-          deleteDepartment();
-          break;
-
-          case 'Delete a role':
-          deleteRole();
-          break;
-
-          case 'Delete an employee':
-          deleteEmployee();
-          break;
-
-        
-          case 'Exit':
-          
+        case 'Exit':
           process.exit();
       }
     })
     .catch((error) => {
       console.error(error);
-      console.log("kill terminal and restart");
+      console.log('Kill terminal and restart');
     });
 }
-
 
 ///////////////////////////////DEPARTMENT
 function viewAllDepartments() {
@@ -94,11 +75,9 @@ function viewAllDepartments() {
     })
     .catch((error) => {
       console.error(error);
-      console.log("kill terminal and restart");
+      console.log('Kill terminal and restart');
     });
-
 }
-
 
 function addDepartment(){
   inquirer
@@ -117,103 +96,125 @@ function addDepartment(){
         })
         .catch((error) => {
           console.error(error);
-          console.log("kill terminal and restart");
+          console.log('Kill terminal and restart');
         });
-    })
-}
-
-function deleteDepartment(){
-
+    });
 }
 
 /////////////////////////////EMPLOYEES
 function viewAllEmployees() {
   employeeQuery.getAllEmployees()
-  .then(([rows]) => {
-    console.table(rows);
-    promptSection(); 
-  })
-  .catch((error) => {
-    console.error(error);
-    console.log("kill terminal and restart");
-  });
-  
-}
-
-function addEmployee() {
-  inquirer
-    .prompt([
-      {
-        type: 'input',
-        name: 'firstName',
-        message: "Enter the employee's first name:",
-      },
-      {
-        type: 'input',
-        name: 'lastName',
-        message: "Enter the employee's last name:",
-      }
-    ])
-    .then((answers) => {
-      const { firstName, lastName } = answers;
-      employeeQuery.addEmployee(firstName, lastName)
-        .then(() => {
-          console.log('Employee added successfully.');
-          promptSection(); 
-        })
-        .catch((error) => {
-          console.error(error);
-          console.log("kill terminal and restart");
-        });
+    .then(([rows]) => {
+      console.table(rows);
+      promptSection(); 
+    })
+    .catch((error) => {
+      console.error(error);
+      console.log('Kill terminal and restart');
     });
 }
 
+function addEmployee() {
+  roleQuery.getAllRoles()
+    .then(([roles]) => {
+      const roleChoices = roles.map(role => ({
+        name: role.title,
+        value: role.id
+      }));
 
-function deleteEmployee() {
+      employeeQuery.getAllEmployees()
+        .then(([employees]) => {
+          const employeeChoices = employees.map(employee => ({
+            name: `${employee.first_name} ${employee.last_name}`,
+            value: employee.id
+          }));
 
-}
+          inquirer
+            .prompt([
+              {
+                type: 'input',
+                name: 'firstName',
+                message: "Enter the employee's first name:",
+              },
+              {
+                type: 'input',
+                name: 'lastName',
+                message: "Enter the employee's last name:",
+              },
+              {
+                type: 'list',
+                name: 'roleId',
+                message: "Select the employee's role:",
+                choices: roleChoices,
+              },
+              {
+                type: 'list',
+                name: 'managerId',
+                message: "Select the employee's manager:",
+                choices: employeeChoices,
+              },
+            ])
+            .then((answers) => {
+              const { firstName, lastName, roleId, managerId } = answers;
 
-
+              employeeQuery.addEmployee(firstName, lastName, roleId, managerId)
+                .then(() => {
+                  console.log('Employee added successfully.');
+                  promptSection();
+                })
+                .catch((error) => {
+                  console.error(error);
+                  console.log('Kill terminal and restart');
+                });
+            });
+        })
+    })
+  }
 
 /////////////////////////ROLES
 function viewAllRoles() {
   roleQuery.getAllRoles()
-  .then(([rows]) => {
-    console.table(rows);
-    promptSection(); 
-  })
-  .catch((error) => {
-    console.error(error);
-    console.log("kill terminal and restart");
-  });
+    .then(([rows]) => {
+      console.table(rows);
+      promptSection(); 
+    })
+    .catch((error) => {
+      console.error(error);
+      console.log('Kill terminal and restart');
+    });
 }
 
 function addRole() {
   inquirer
-  .prompt([
-    {
-      type: 'input',
-      name: 'roleName',
-      message: 'Enter a new role name:',
-    }
-  ])
-  .then((answers) => {
-    roleQuery.addRole(answers.roleName)
-      .then(() => {
-        console.log('Role added successfully.');
-        promptSection(); 
-      })
-      .catch((error) => {
-        console.error(error);
-        console.log("kill terminal and restart");
-      });
-  })
+    .prompt([
+      {
+        type: 'input',
+        name: 'roleTitle',
+        message: 'Enter a new role title:',
+      },
+      {
+        type: 'input',
+        name: 'roleSalary',
+        message: 'Enter the salary for this role:',
+      },
+      {
+        type: 'input',
+        name: 'departmentId',
+        message: 'Enter the department ID for this role:',
+      },
+    ])
+    .then((answers) => {
+      roleQuery.addRole(answers.roleTitle, answers.roleSalary, answers.departmentId)
+        .then(() => {
+          console.log('Role added successfully.');
+          promptSection(); 
+        })
+        .catch((error) => {
+          console.error(error);
+          console.log('Kill terminal and restart');
+        });
+    });
 }
-
-function deleteRole(){
-        
-}
-
 
 //////////////////////////////UPDATE EMPLOYEE ROLE
 function updateEmployeeRole() {
@@ -224,18 +225,16 @@ function updateEmployeeRole() {
         value: employee.id
       }));
 
-      // Prompt user to select an employee
       inquirer
         .prompt([
           {
             type: 'list',
             name: 'selectedEmployee',
             message: 'Select the employee to update:',
-            choices: employeeChoices
+            choices: employeeChoices,
           }
         ])
         .then(({ selectedEmployee }) => {
-          // Get list of roles
           roleQuery.getAllRoles()
             .then(([roles]) => {
               const roleChoices = roles.map(role => ({
@@ -243,33 +242,29 @@ function updateEmployeeRole() {
                 value: role.id
               }));
 
-              // Prompt user to select a new role
-        inquirer
-          .prompt([
-            {
-              type: 'list',
-              name: 'newRole',
-              message: 'Select the new role:',
-              choices: roleChoices
-            }
-          ])
-          .then(({ newRole }) => {
-            // Update employee's role in the database
-            employeeQuery.updateEmployeeRole(selectedEmployee, newRole)
-              .then(() => {
-              console.log('Employee role updated successfully.');
-              promptSection();
+              inquirer
+                .prompt([
+                  {
+                    type: 'list',
+                    name: 'newRole',
+                    message: 'Select the new role:',
+                    choices: roleChoices,
+                  }
+                ])
+                .then(({ newRole }) => {
+                  employeeQuery.updateEmployeeRole(selectedEmployee, newRole)
+                    .then(() => {
+                      console.log('Employee role updated successfully.');
+                      promptSection();
+                    })
+                    .catch((error) => {
+                      console.error(error);
+                      console.log('Kill terminal and restart');
+                    });
+                });
             })
-              .catch((error) => {
-                console.error(error);
-                console.log('kill terminal and restart');
-              });
-            });
-          });
-        });
-      }) 
-  }
-  
+        })
+    })
+}
 
-promptSection()
-
+promptSection();
