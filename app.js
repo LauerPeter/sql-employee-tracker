@@ -87,7 +87,14 @@ function viewAllDepartments() {
 
 
 function addDepartment(){
-
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'departmentName',
+        message: 'Enter the name of the new department:',
+      }
+    ])
 }
 
 
@@ -107,7 +114,14 @@ function viewAllEmployees() {
 }
 
 function addEmployee() {
-
+  inquirer
+  .prompt([
+    {
+      type: 'input',
+      name: 'employeeName',
+      message: 'Enter the name of the new employee:',
+    }
+  ])
 }
 
 
@@ -126,14 +140,20 @@ function viewAllRoles() {
 }
 
 function addRole() {
+  inquirer
+  .prompt([
+    {
+      type: 'input',
+      name: 'roleName',
+      message: 'Enter a new role name:',
+    }
+  ])
+}
+
+function updateEmployeeRole() {
 
 }
 
-
-/////////////////Exit!
-function Exit() {
-
-}
 
 
 promptSection()
