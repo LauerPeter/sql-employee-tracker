@@ -6,6 +6,8 @@ Create a Data Base for your company using the command line. Keep track of all yo
 
 View all departments, roles, and employees at any given time. As well as update any information on employees etc.
 
+## Video Walkthrough
+
 ### Dependencies
 
 inquerer 8.2.4 
