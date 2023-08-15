@@ -8,6 +8,12 @@ View all departments, roles, and employees at any given time. As well as update 
 
 ## Video Walkthrough
 
+
+
+https://github.com/LauerPeter/sql-employee-tracker/assets/135652706/8d8caba1-1729-4306-bdb3-94b03c188d4e
+
+
+
 ### Dependencies
 
 inquerer 8.2.4 
