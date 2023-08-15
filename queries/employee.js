@@ -26,6 +26,12 @@ class EmployeeQuery {
       });
     });
   }
+
+  deleteEmployee(employeeId) {
+    return this.connection.promise().query('DELETE FROM employee WHERE id = ?', [employeeId]);
+  }
 }
+
+
 
 module.exports = new EmployeeQuery(require('../connector/db'));

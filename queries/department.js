@@ -13,6 +13,10 @@ class DepartmentQuery {
   addDepartment(departmentName) {
     return this.connection.promise().query('INSERT INTO department (name) VALUES (?)', [departmentName]);
   }
+
+  deleteDepartment(departmentId) {
+    return this.connection.promise().query('DELETE FROM department WHERE id = ?', [departmentId]);
+  }
 }
 
 module.exports = new DepartmentQuery(require('../connector/db')); //import/transport database

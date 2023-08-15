@@ -122,7 +122,9 @@ function addDepartment(){
     })
 }
 
+function deleteDepartment(){
 
+}
 
 /////////////////////////////EMPLOYEES
 function viewAllEmployees() {
@@ -160,6 +162,10 @@ function addEmployee() {
   })
 }
 
+function deleteEmployee() {
+
+}
+
 
 
 /////////////////////////ROLES
@@ -195,6 +201,10 @@ function addRole() {
         console.log("kill terminal and restart");
       });
   })
+}
+
+function deleteRole(){
+        
 }
 
 
@@ -250,8 +260,8 @@ function updateEmployeeRole() {
             });
           });
         });
-      })
-     }
+      }) 
+  }
   
 
 promptSection()
