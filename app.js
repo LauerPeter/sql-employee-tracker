@@ -59,6 +59,19 @@ function promptSection() {
           case 'Update an employee role':
           updateEmployeeRole();
           break;
+
+          case 'Delete a department':
+          deleteDepartment();
+          break;
+
+          case 'Delete a role':
+          deleteRole();
+          break;
+
+          case 'Delete an employee':
+          deleteEmployee();
+          break;
+
         
           case 'Exit':
           
