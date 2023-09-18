@@ -1,5 +1,5 @@
 
-const db = require('../connector/db');
+const db = require('../config/db');
 
 class EmployeeQuery {
   constructor(connection) {
